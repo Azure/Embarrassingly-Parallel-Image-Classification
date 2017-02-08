@@ -5,7 +5,7 @@
 
 cntk_home="/usr/hdp/current"
 cd $cntk_home
-curl "BinaryDrop/CNTK-2-0-beta10-0-Linux-64bit-CPU-Only.tar.gz" | tar xzf -
+curl "https://cntk.ai/BinaryDrop/CNTK-2-0-beta10-0-Linux-64bit-CPU-Only.tar.gz" | tar xzf -
 cd ./cntk/Scripts/install/linux 
 sed -i "s#"ANACONDA_PREFIX=\"\$HOME/anaconda3\""#"ANACONDA_PREFIX=\"\/usr/bin/anaconda\""#g" install-cntk.sh
 sed -i "s#"\$HOME/anaconda3"#"\$ANACONDA_PREFIX"#g" install-cntk.sh
