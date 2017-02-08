@@ -36,13 +36,13 @@ tf.app.flags.DEFINE_string('dataset_dir',
                            'D:\\combined\\train_subsample',
                            'The directory where the dataset files are stored.')
 tf.app.flags.DEFINE_string('checkpoint_path',
-                           'D:\\tf\\resnet_v1_152.ckpt',
+                           'D:\\tf\\resnet_v1_50.ckpt',
                            'The path to a checkpoint from which to fine-tune.')
 
-tf.app.flags.DEFINE_string('checkpoint_exclude_scopes', 'resnet_v1_152/logits',
+tf.app.flags.DEFINE_string('checkpoint_exclude_scopes', 'resnet_v1_50/logits',
                            'Comma-separated list of scopes of variables to exclude when restoring '
                            'from a checkpoint.')
-tf.app.flags.DEFINE_string('trainable_scopes', 'resnet_v1_152/logits',
+tf.app.flags.DEFINE_string('trainable_scopes', 'resnet_v1_50/logits',
                            'Comma-separated list of scopes to filter the set of variables to train.'
                            'By default, None would train all the variables.')
 
@@ -115,7 +115,7 @@ def get_preprocessing():
 
 def get_network_fn(num_classes, weight_decay=0.0):
     arg_scope = resnet_v1.resnet_arg_scope(weight_decay=weight_decay)
-    func = resnet_v1.resnet_v1_152
+    func = resnet_v1.resnet_v1_50
     @functools.wraps(func)
     def network_fn(images):
         with slim.arg_scope(arg_scope):

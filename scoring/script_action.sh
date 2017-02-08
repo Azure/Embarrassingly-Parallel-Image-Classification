@@ -15,4 +15,9 @@ sudo /usr/bin/anaconda/envs/cntk-py35/bin/pip install pillow
 sudo /usr/bin/anaconda/envs/cntk-py35/bin/pip install tensorflow
 
 sudo mkdir /tmp/resnet
+cd /tmp/resnet
+wget https://mawahstorage.blob.core.windows.net/models/tf.zip -P /tmp/resnet
+unzip /tmp/resnet/tf.zip
+wget https://mawahstorage.blob.core.windows.net/models/resnet20_159.dnn -P /tmp/resnet
+wget https://mawahstorage.blob.core.windows.net/models/resnet50_299.dnn -P /tmp/resnet
 sudo chmod -R 777 /tmp/resnet
