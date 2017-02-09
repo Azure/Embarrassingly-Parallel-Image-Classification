@@ -12,7 +12,6 @@ image_width  = 224
 num_channels = 3  # RGB
 num_classes  = 7
 
-from __future__ import print_function
 import os
 import math
 import numpy as np
@@ -73,7 +72,9 @@ def create_reader(map_file):
     if not os.path.exists(map_file):
         raise RuntimeError("File '{}' does not exist".format(map_file))
 
-    transforms = [ImageDeserializer.scale(width=image_width,
+    transforms = [ImageDeserializer.crop(crop_type='randomarea', area_ratio=[0.85,1.0],
+                                         jitter_type='uniratio'),
+                  ImageDeserializer.scale(width=image_width,
                                           height=image_height,
                                           channels=num_channels,
                                           interpolations='linear')]
@@ -82,12 +83,12 @@ def create_reader(map_file):
         labels   = StreamDef(field='label', shape=num_classes))))
 
 # Function for coordinating training
-def train(reader_train, epoch_size, max_epochs, model_location=None):
+def train(reader_train, epoch_size, max_epochs):
     set_computation_network_trace_level(0)
     input_var = input_variable((num_channels, image_height, image_width))
     label_var = input_variable((num_classes))
 
-    z = create_model(input_var, 8, num_classes)
+    z = create_model(input_var, 3, num_classes) # 3 for 20-layer, 8 for 50-layer
     lr_per_mb = [0.001]+[0.01]*80+[0.001]*40+[0.0001]
 
     # loss and metric
@@ -106,8 +107,6 @@ def train(reader_train, epoch_size, max_epochs, model_location=None):
                            l2_regularization_weight = l2_reg_weight,
                            unit_gain=True)
     trainer = Trainer(z, ce, pe, learner)
-    if model_location is not None:
-        trainer.restore_from_checkpoint(model_location)
 
     input_map = {input_var: reader_train.streams.features,
                  label_var: reader_train.streams.labels}
@@ -123,9 +122,10 @@ def train(reader_train, epoch_size, max_epochs, model_location=None):
             sample_count += trainer.previous_minibatch_sample_count
             progress_printer.update_with_trainer(trainer, with_metric=True)
         progress_printer.epoch_summary(with_metric=True)
-        z.save_model(os.path.join(model_path, 'resnet50_{}.dnn'.format(epoch)))
+        trainer.save_checkpoint(os.path.join(model_path, 'resnet20_{}.dnn'.format(epoch)))
+        #z.save_model(os.path.join(model_path, 'resnet20_{}.dnn'.format(epoch)))
     return
 
 if __name__ == '__main__':
     reader_train = create_reader(os.path.join(data_path, 'map.txt'))
-    train(reader_train, network_name, epoch_size=1000, max_epochs=160)
+    train(reader_train, epoch_size=10000, max_epochs=300)

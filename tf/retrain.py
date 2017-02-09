@@ -17,6 +17,7 @@
 
 import tensorflow as tf
 import pandas as pd
+import numpy as np
 import os
 import functools
 
@@ -58,7 +59,7 @@ tf.app.flags.DEFINE_float('weight_decay', 0.00004, 'The weight decay on the mode
 tf.app.flags.DEFINE_float('opt_epsilon', 1.0, 'Epsilon term for the optimizer.')
 tf.app.flags.DEFINE_float('rmsprop_momentum', 0.9, 'Momentum.')
 tf.app.flags.DEFINE_float('rmsprop_decay', 0.9, 'Decay term for RMSProp.')
-tf.app.flags.DEFINE_float('learning_rate', 0.05, 'Initial learning rate.')
+tf.app.flags.DEFINE_float('learning_rate', 0.02, 'Initial learning rate.')
 tf.app.flags.DEFINE_float('label_smoothing', 0.0, 'The amount of label smoothing.')
 tf.app.flags.DEFINE_float('learning_rate_decay_factor', 0.9, 'Learning rate decay factor.')
 tf.app.flags.DEFINE_float('num_epochs_per_decay', 2.0, 'Number of epochs after which learning rate decays.')
@@ -105,10 +106,16 @@ def get_preprocessing():
         _R_MEAN = 123.68
         _G_MEAN = 116.78
         _B_MEAN = 103.94
-        image = tf.expand_dims(image, 0)
-        resized_image = tf.image.resize_bilinear(image, [output_height, output_width], align_corners=False)
+        #image = tf.expand_dims(image, 0)
+
+        temp_dim = np.random.randint(175, 223)
+        distorted_image = tf.random_crop(image, [output_height, output_width, 3])
+        distorted_image = tf.expand_dims(distorted_image, 0)
+        resized_image = tf.image.resize_bilinear(distorted_image, [output_height, output_width], align_corners=False)
         resized_image = tf.squeeze(resized_image)
         resized_image.set_shape([output_height, output_width, 3])
+        resized_image = tf.image.random_flip_left_right(resized_image)
+
         image = tf.to_float(resized_image)
         return(mean_image_subtraction(image, [_R_MEAN, _G_MEAN, _B_MEAN]))
     return(preprocessing_fn)
