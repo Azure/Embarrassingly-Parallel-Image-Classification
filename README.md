@@ -45,11 +45,13 @@ The trained land use models were applied to 2016 aerial images tiling Middlesex 
 <img src="./img/middlesex/20655.png"/>
 <img src="./img/middlesex/33308.png"/>
 
-General trends in development were also visualized at the county level:
+Development could also visualized and quantified at the county level. In the figure below, regions classified as developed land are represented by red pixels, cultivated land by white pixels, and undeveloped land by green pixels.
 
 <img src="./img/middlesex/true_and_predicted_labels_smoothened.png"/>
 
-For more information on this application, please see the [Middlesex County Land Use Prediction](./land_use_prediction.md) page.
+The predicted land classes largely matched the true 2011 labels. Unfortunately, noisy year-to-year variation (likely reflecting differences in coloration and vegetation) were too large in magnitude to quantify general trends in development.
+
+For more information on inferring recent land development with our trained DNNs, please see the [Middlesex County Land Use Prediction](./land_use_prediction.md) page.
 
 ## Contributing and Adapting
 
