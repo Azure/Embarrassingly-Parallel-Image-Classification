@@ -95,10 +95,10 @@ def mean_image_subtraction(image, means):
     if len(means) != num_channels:
         raise ValueError('len(means) must match the number of channels')
 
-    channels = tf.split(2, num_channels, image)
+    channels = tf.split(axis=2, num_or_size_splits=num_channels, value=image)
     for i in range(num_channels):
         channels[i] -= means[i]
-    return(tf.concat(2, channels))
+    return(tf.concat(axis=2, values=channels))
 
 def get_preprocessing():
     def preprocessing_fn(image, output_height=224, output_width=224):

@@ -16,6 +16,7 @@ from cntk.learner import momentum_sgd, learning_rate_schedule, momentum_as_time_
 from cntk.ops import input_variable, parameter, cross_entropy_with_softmax, classification_error, combine
 from cntk.ops.functions import CloneMethod
 from cntk.utils import log_number_of_parameters, ProgressPrinter
+import cntk.io.transforms as xforms
 import numpy as np
 import os, sys
 
@@ -26,21 +27,20 @@ num_channels = 3
 image_height = 224
 image_width = 224
 num_classes = 6
-epoch_size = 44184  # total number of images in the training set
+epoch_size = 44184  # 44184 is the total number of images in the training set
 mb_size = 16
 max_epochs = 50
 model_file = "D:\\repo\\cntk\\AlexNet.model"
 
 def create_reader(map_file):
-    transforms = [ImageDeserializer.crop(crop_type='randomarea', area_ratio=[0.85,1.0],
-                                         jitter_type='uniratio'),
-                  ImageDeserializer.scale(width=image_width,
-                                          height=image_height,
-                                          channels=num_channels,
-                                          interpolations='linear'),
-                  ImageDeserializer.color(brightness_radius=0.2,
-                                          contrast_radius=0.2,
-                                          saturation_radius=0.2)]
+    transforms = [xforms.crop(crop_type='randomside', side_ratio=0.85, jitter_type='uniratio'),
+                  xforms.scale(width=image_width,
+                               height=image_height,
+                               channels=num_channels,
+                               interpolations='linear'),
+                  xforms.color(brightness_radius=0.2,
+                               contrast_radius=0.2,
+                               saturation_radius=0.2)]
     return(MinibatchSource(ImageDeserializer(map_file, StreamDefs(
         features = StreamDef(field='image', transforms=transforms, is_sparse=False),
         labels   = StreamDef(field='label', shape=num_classes, is_sparse=False)))))
@@ -83,16 +83,17 @@ def train_fast_rcnn(debug_output=False):
     mm_schedule = momentum_as_time_constant_schedule(momentum_time_constant)
 
     # Instantiate the trainer object
+    progress_writers = [ProgressPrinter(tag='Training', num_epochs=max_epochs)]
     learner = momentum_sgd(frcn_output.parameters,
                            lr_schedule,
                            mm_schedule,
                            l2_regularization_weight=l2_reg_weight)
-    trainer = Trainer(frcn_output, ce, pe, learner)
+    trainer = Trainer(frcn_output, (ce, pe), learner, progress_writers)
 
     # Get minibatches of images and perform model training
     print("Training Fast R-CNN model for %s epochs." % max_epochs)
     log_number_of_parameters(frcn_output)
-    progress_printer = ProgressPrinter(tag='Training', num_epochs=max_epochs)
+    
     for epoch in range(max_epochs):
         sample_count = 0
         while sample_count < epoch_size:
@@ -100,9 +101,8 @@ def train_fast_rcnn(debug_output=False):
                 input_map=input_map)
             trainer.train_minibatch(data)
             sample_count += trainer.previous_minibatch_sample_count
-            progress_printer.update_with_trainer(trainer, with_metric=True)
 
-        progress_printer.epoch_summary(with_metric=True)
+        trainer.summarize_training_progress()
         frcn_output.save_model(os.path.join(output_model_folder,
                                             'withcrops_{}.dnn'.format(epoch+1)))
 
