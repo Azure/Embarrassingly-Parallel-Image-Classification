@@ -12,9 +12,8 @@ sed -i "s#"\$HOME/anaconda3"#"\$ANACONDA_PREFIX"#g" install-cntk.sh
 ./install-cntk.sh --py-version 35
 
 sudo /usr/bin/anaconda/envs/cntk-py35/bin/pip install pillow
-sudo /usr/bin/anaconda/envs/cntk-py35/bin/pip install tensorflow==0.12.1
+sudo /usr/bin/anaconda/envs/cntk-py35/bin/pip install tensorflow
 
-#sudo rm -rf /tmp/models
 sudo mkdir /tmp/models
 cd /tmp/models
 wget https://mawahstorage.blob.core.windows.net/models/tf.zip -P /tmp/models
