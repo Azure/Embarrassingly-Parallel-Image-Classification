@@ -1,16 +1,11 @@
 # Copyright (c) Microsoft. All rights reserved.
 #
-# Modified by Mary Wahl from the Object Detection with Fast-R-CNN CNTK example script at:
+# Modified by Mary Wahl from work by Patrick Buehler, cf.
 # https://github.com/Microsoft/CNTK/blob/master/Examples/Image/Detection/FastRCNN/A2_RunCntk_py3.py
 #
 # Licensed under the MIT license. See LICENSE.md file in the project root
 # for full license information.
 # ==============================================================================
-
-''' edit as necessary '''
-output_model_folder = 'D:\\cntk\\output_models'
-map_file = 'D:\\combined\\train_subsample\\map.txt'
-model_file = "D:\\cntk\\AlexNet.model"
 
 from __future__ import print_function
 from cntk import Trainer, UnitType, load_model
@@ -24,13 +19,17 @@ from cntk.utils import log_number_of_parameters, ProgressPrinter
 import numpy as np
 import os, sys
 
+output_model_folder = 'D:\\repo\\cntk\\'
+map_file = 'D:\\balanced_training_set\\map.txt'
+
 num_channels = 3
 image_height = 224
 image_width = 224
 num_classes = 6
-epoch_size = 50000
+epoch_size = 44184  # total number of images in the training set
 mb_size = 16
 max_epochs = 50
+model_file = "D:\\repo\\cntk\\AlexNet.model"
 
 def create_reader(map_file):
     transforms = [ImageDeserializer.crop(crop_type='randomarea', area_ratio=[0.85,1.0],
@@ -105,7 +104,7 @@ def train_fast_rcnn(debug_output=False):
 
         progress_printer.epoch_summary(with_metric=True)
         frcn_output.save_model(os.path.join(output_model_folder,
-                                            'alexnet_{}.dnn'.format(epoch+1)))
+                                            'withcrops_{}.dnn'.format(epoch+1)))
 
     return
 
