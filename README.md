@@ -13,6 +13,19 @@ Unfortunately, DNNs are also among the most time- and resource-intensive machine
 
 This repository demonstrates how trained DNNs produced with two common deep learning frameworks, Microsoft's [Cognitive Toolkit (CNTK)](https://github.com/Microsoft/CNTK/wiki) and Google's [Tensorflow](https://github.com/tensorflow/tensorflow), can be operationalized on Spark to score a large image set. Files stored on [Azure Data Lake Store](https://azure.microsoft.com/en-us/services/data-lake-store/), Microsoft's HDFS-based cloud storage resource, are processed in parallel by workers on the Spark cluster. The guide follows a specific example use case: land use classification from aerial imagery.
 
+## Fast start
+
+To get started right away,
+* Follow the instructions in the [Image Set Preparation](./image_set_preparation.ipynb) notebook to generate the training and validation datasets.
+   * If you will use our provided image sets, you only need to complete the "Prepare an Azure Data Science Virtual Machine for image extraction" and "Dataset preparation for deep learning" sections.
+   * If you seek a CNTK Spark operationalization example that doesn't require image set preparation or VM deployment, you may prefer [this walkthrough](https://github.com/Azure-Samples/hdinsight-pyspark-cntk-integration) instead.
+* If you want to retrain an image classification DNN using transfer learning, complete the [Model Training](./model_training.ipynb) notebook.
+   * You can skip this step if you choose to use our example DNNs.
+* If you want to operationalize DNNs on Spark, complete the [Scoring on Spark](./scoring_on_spark.ipynb) notebook.
+* If you want to learn how the retrained DNN can be used to study urban development trends, see the [Middlesex County Land Use Prediction](./land_use_prediction.md) page.
+* For the motivation and summary of our work, see below.
+
+
 ## Land use classification from aerial imagery
 
 In this guide, we develop a classifier that can predict how a parcel of land has been used -- e.g., whether it is developed, cultivated, forested, etc. -- from an aerial image. We apply the classifier to track recent land development in Middlesex County, MA: the home of Microsoft's New England Research and Development (NERD) Center. Aerial image classification has many important applications in industry and government, including:
