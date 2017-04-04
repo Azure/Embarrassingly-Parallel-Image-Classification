@@ -9,18 +9,20 @@
 
 from __future__ import print_function
 from cntk import Trainer, UnitType, load_model
-from cntk.layers import Placeholder, Constant, Dense
-from cntk.graph import find_by_name
+from cntk.layers import Constant, Dense
+from cntk.logging.graph import find_by_name
+from cntk.logging.progress_print import log_number_of_parameters, ProgressPrinter
 from cntk.io import MinibatchSource, ImageDeserializer, StreamDef, StreamDefs
-from cntk.learner import momentum_sgd, learning_rate_schedule, momentum_as_time_constant_schedule
-from cntk.ops import input_variable, parameter, cross_entropy_with_softmax, classification_error, combine
+from cntk.learners import momentum_sgd, learning_rate_schedule, momentum_as_time_constant_schedule
+from cntk.ops import input_variable, parameter, combine, placeholder
+from cntk.losses import cross_entropy_with_softmax
+from cntk.metrics import classification_error
 from cntk.ops.functions import CloneMethod
-from cntk.utils import log_number_of_parameters, ProgressPrinter
 import cntk.io.transforms as xforms
 import numpy as np
 import os, sys
 
-output_model_folder = 'D:\\repo\\cntk\\'
+output_model_folder = 'D:\\models'
 map_file = 'D:\\balanced_training_set\\map.txt'
 
 num_channels = 3
@@ -30,7 +32,7 @@ num_classes = 6
 epoch_size = 44184  # 44184 is the total number of images in the training set
 mb_size = 16
 max_epochs = 50
-model_file = "D:\\repo\\cntk\\AlexNet.model"
+model_file = "D:\\models\\AlexNet_cntk2beta15.model"
 
 def create_reader(map_file):
     transforms = [xforms.crop(crop_type='randomside', side_ratio=0.85, jitter_type='uniratio'),
@@ -49,7 +51,7 @@ def frcn_predictor(features, n_classes):
     loaded_model = load_model(model_file)
     feature_node = find_by_name(loaded_model, 'features')
     last_node    = find_by_name(loaded_model, 'h2_d')
-    all_layers = combine([last_node.owner]).clone(CloneMethod.freeze, {feature_node: Placeholder()})
+    all_layers = combine([last_node.owner]).clone(CloneMethod.freeze, {feature_node: placeholder()})
 
     feat_norm = features - Constant(114)
     fc_out = all_layers(feat_norm)
