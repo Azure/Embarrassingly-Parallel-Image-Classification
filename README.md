@@ -47,7 +47,7 @@ We used Spark to apply the trained CNTK and Tensorflow models to the 11,760 imag
 
 Our retrained models achieved an overall classification accuracy of ~80% on these six categories, with the majority of errors occurring between different types of undeveloped land (see the confusion matrix for the CNTK model's predictions, below):
 
-<img src="./img/scoring/balanced_cm.png"/>
+<img src="./img/scoring/balanced_cm_small.png"/>
 
 For a subsequent application -- identifying and quantifying recently-developed land -- we further grouped these land use labels into "Developed," "Cultivated," and "Undeveloped" classes. Our model's overall accuracy at predicting these higher-level labels was roughly 95% in our validation set. For more information on model validation on Spark, see the [Scoring on Spark](./scoring_on_spark.ipynb) Jupyter notebook. 
 
@@ -55,12 +55,12 @@ For a subsequent application -- identifying and quantifying recently-developed l
 
 The trained land use models were applied to 2016 aerial images tiling Middlesex County. The predicted 2016 labels were then compared to the ground-truth 2011 labels to identify putative regions of recent development: such an application may be useful for regulatory bodies seeking to automatically identify new structures or cultivated land in remote locations. An example result (with surrounding tiles for context) is included below:
 
-<img src="./img/middlesex/20655.png"/>
-<img src="./img/middlesex/33308.png"/>
+<img src="./img/middlesex/20655_small.png"/>
+<img src="./img/middlesex/33308_small.png"/>
 
 Development could also visualized and quantified at the county level. In the figure below, regions classified as developed land are represented by red pixels, cultivated land by white pixels, and undeveloped land by green pixels.
 
-<img src="./img/middlesex/true_and_predicted_labels_smoothened.png"/>
+<img src="./img/middlesex/true_and_predicted_labels.png"/>
 
 The predicted land classes largely matched the true 2011 labels. Unfortunately, noisy year-to-year variation (likely reflecting differences in coloration and vegetation) were too large in magnitude to quantify general trends in development.
 
