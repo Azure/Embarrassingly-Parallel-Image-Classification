@@ -11,7 +11,7 @@ Deep neural networks (DNNs) are extraordinarily versatile artificial intelligenc
 
 Unfortunately, DNNs are also among the most time- and resource-intensive machine learning models. Whereas a trained linear regression model results can typically score input in negligible time, applying a DNN to a single file of interest may take hundreds or thousands of milliseconds -- a processing rate insufficient for some business needs. Fortunately, DNNs can be applied in parallel and scalable fashion when evaluation is performed on Spark clusters.
 
-This repository demonstrates how trained DNNs produced with two common deep learning frameworks, Microsoft's [Cognitive Toolkit (CNTK)](https://github.com/Microsoft/CNTK/wiki) and Google's [Tensorflow](https://github.com/tensorflow/tensorflow), can be operationalized on Spark to score a large image set. Files stored on [Azure Data Lake Store](https://azure.microsoft.com/en-us/services/data-lake-store/), Microsoft's HDFS-based cloud storage resource, are processed in parallel by workers on the Spark cluster. The guide follows a specific example use case: land use classification from aerial imagery.
+This repository demonstrates how trained DNNs produced with two common deep learning frameworks, Microsoft's [Cognitive Toolkit (CNTK)](https://github.com/Microsoft/CNTK/wiki) and Google's [TensorFlow](https://github.com/tensorflow/tensorflow), can be operationalized on Spark to score a large image set. Files stored on [Azure Data Lake Store](https://azure.microsoft.com/en-us/services/data-lake-store/), Microsoft's HDFS-based cloud storage resource, are processed in parallel by workers on the Spark cluster. The guide follows a specific example use case: land use classification from aerial imagery.
 
 ## Fast start
 
