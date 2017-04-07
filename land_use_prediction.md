@@ -28,8 +28,8 @@ We found a striking correspondence between true and predicted labels at both tim
 
 |   	|No. developed tiles   	|No. cultivated tiles (%)   	|No. undeveloped tiles  	|
 |---	|---	|---	|---	|
-|NLCD 2011 labels   	|28,537 (43.5%)   	|2,337 (3.6%)   	|34,689 (52.9%)   	|
 |2010 predicted labels   	|27,584 (42.1%)   	|941 (1.4%)   	|37,038 (56.4%)   	|
+|NLCD 2011 labels   	|28,537 (43.5%)   	|2,337 (3.6%)   	|34,689 (52.9%)   	|
 |2016 predicted labels   	|28,911 (44.1%)   	|4,011 (6.1%)   	|32,641 (49.8%)   	|
 
 For the purposes of mapping and quantifying land use, it may be preferable to discount isolated patches of differing land use. For example, an urban park may not be considered undeveloped land for the purposes of habit conservation, and construction of a rural homestead may not indicate substantial development in an otherwise cultivated region. We note that isolated tiles of land use can be removed by applying a 3x3 plurality-voting filter (with added weight for the center tile's own predicted label) to the raw predictions. The results of such a smoothing operation are shown below:
