@@ -40,7 +40,7 @@ After smoothing, the classification error for predictions on 2010 images was red
 
 ## Identifying newly developed regions
 
-The ability to identify programmatically identify new development and cultivation in remote areas may be useful to government agencies that regulate housing and commerce, e.g. to identify tax evasion. By comparing our 2016 predicted labels to the 2011 NLCD tile labels, we were able to identify ~400 tiles putatively undergoing new development in the last five years. A few examples (including bordering tiles for context) are shown below:
+The ability to programmatically identify new development and cultivation in remote areas may be useful to government agencies that regulate housing and commerce, e.g. to identify tax evasion or enforce land use regulations.  Roughly 400 regions of putative new development were identified in Middlesex County based on a change in their label from "Undeveloped" in 2011 to "Developed" in our 2016 predictions. A few examples (including bordering tiles for context) are shown below:
 
 <img src="./img/middlesex/33308.png"/>
 <img src="./img/middlesex/36083.png"/>
