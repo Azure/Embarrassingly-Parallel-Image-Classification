@@ -36,7 +36,7 @@ For the purposes of mapping and quantifying land use, it may be preferable to di
 
 <img src="./img/middlesex/true_and_predicted_labels_smoothened.png"/>
 
-After smoothing, the classification error for predictions on 2010 images was reduced from 4% to 2.2%.
+After smoothing, the classification error for predictions on 2010 images was reduced from 20% to 17%.
 
 ## Identifying newly developed regions
 
