@@ -18,7 +18,7 @@ This repository demonstrates how trained DNNs produced with two common deep lear
 To get started right away,
 * Follow the instructions in the [Image Set Preparation](./image_set_preparation.ipynb) notebook to generate the training and validation datasets.
    * If you will use our provided image sets, you only need to complete the "Prepare an Azure Data Science Virtual Machine for image extraction" and "Dataset preparation for deep learning" sections.
-   * If you seek a CNTK Spark operationalization example that doesn't require image set preparation or VM deployment, you may prefer [this walkthrough](https://github.com/Azure-Samples/hdinsight-pyspark-cntk-integration) instead.
+   * If you seek a CNTK Spark operationalization example that doesn't require image set preparation or VM deployment, you may prefer [this walkthrough](https://github.com/Azure-Samples/hdinsight-pyspark-cntk-integration) instead. A brief description of the technique is included in [this blog post](https://blogs.technet.microsoft.com/machinelearning/2017/04/25/using-microsofts-deep-learning-toolkit-with-spark-on-azure-hdinsight-clusters/).
 * If you want to retrain an image classification DNN using transfer learning, complete the [Model Training](./model_training.ipynb) notebook.
    * You can skip this step if you choose to use our example DNNs.
 * If you want to operationalize trainedDNNs on Spark, complete the [Scoring on Spark](./scoring_on_spark.ipynb) notebook.
