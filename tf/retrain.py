@@ -78,7 +78,7 @@ def get_image_and_class_count(dataset_dir, split_name):
 def read_label_file(dataset_dir, filename='labels.txt'):
     labels_filename = os.path.join(dataset_dir, filename)
     with tf.gfile.Open(labels_filename, 'r') as f:
-        lines = f.read().decode()
+        lines = f.read()
     lines = lines.split('\n')
     lines = filter(None, lines)
 
